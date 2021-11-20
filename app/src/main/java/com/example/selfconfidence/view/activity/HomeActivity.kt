@@ -1,4 +1,4 @@
-package com.example.selfconfidence.view
+package com.example.selfconfidence.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

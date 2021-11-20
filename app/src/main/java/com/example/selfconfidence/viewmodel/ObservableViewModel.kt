@@ -1,5 +1,8 @@
 package com.example.selfconfidence.viewmodel
 
+import androidx.databinding.Observable
+import androidx.lifecycle.ViewModel
+
 /**
  * Copyright, 2020, WhyHow info, All right reserved.
  *
@@ -8,5 +11,15 @@ package com.example.selfconfidence.viewmodel
  * Created Time: 2021-11-20
  * Descroption:
  */
-class ObservableViewModel {
+open class ObservableViewModel : ViewModel(), Observable {
+
+
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+
+
+    }
+
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+
+    }
 }
