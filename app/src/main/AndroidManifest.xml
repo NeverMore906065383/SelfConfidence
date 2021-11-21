@@ -10,10 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SelfConfidence">
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/actions" />
+
         <activity
             android:name=".view.SplashActivity"
             android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.SelfConfidence.NoActionBar"></activity>
+            android:theme="@style/Theme.SelfConfidence.NoActionBar" />
         <activity android:name=".view.activity.HomeActivity" />
         <activity android:name=".view.activity.MainActivity">
             <intent-filter>

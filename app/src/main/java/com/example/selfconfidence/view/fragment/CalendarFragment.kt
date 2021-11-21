@@ -1,11 +1,18 @@
 package com.example.selfconfidence.view.fragment
 
+import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.selfconfidence.R
+import com.example.selfconfidence.adapter.CalendarRcyAdapter
+import com.example.selfconfidence.databinding.FragmentCalendarBinding
+import com.example.selfconfidence.viewmodel.fragment.FragmentCalendarViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,12 +37,27 @@ class CalendarFragment : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false)
+
+        val viewModel = ViewModelProvider.AndroidViewModelFactory(Application())
+            .create(FragmentCalendarViewModel::class.java)
+        val binding = FragmentCalendarBinding.inflate(inflater)
+        binding.viewmodel = viewModel
+
+        initView(binding)
+
+        return binding.root
+    }
+
+    private fun initView(binding: FragmentCalendarBinding) {
+        val gridLayoutManager = GridLayoutManager(context, 7)
+        binding.recyclerview.layoutManager = gridLayoutManager
+        binding.recyclerview.adapter = CalendarRcyAdapter(listOf("mon", "thr", "wen"))
     }
 
     companion object {
