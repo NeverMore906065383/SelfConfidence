@@ -2,6 +2,7 @@ package com.example.selfconfidence.view.fragment
 
 import android.app.Application
 import android.os.Bundle
+import android.util.LayoutDirection
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.selfconfidence.GridItemDecoration
 import com.example.selfconfidence.R
 import com.example.selfconfidence.adapter.CalendarRcyAdapter
 import com.example.selfconfidence.databinding.FragmentCalendarBinding
@@ -57,7 +61,8 @@ class CalendarFragment : Fragment() {
     private fun initView(binding: FragmentCalendarBinding) {
         val gridLayoutManager = GridLayoutManager(context, 7)
         binding.recyclerview.layoutManager = gridLayoutManager
-        binding.recyclerview.adapter = CalendarRcyAdapter(listOf("mon", "thr", "wen"))
+        binding.recyclerview.adapter = CalendarRcyAdapter(listOf("mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen"))
+        binding.recyclerview.addItemDecoration(GridItemDecoration())
     }
 
     companion object {
