@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.selfconfidence.R
 import kotlinx.android.synthetic.main.calendar_rcy_item.view.*
+import kotlin.coroutines.coroutineContext
 
 /**
  * Copyright, 2020, WhyHow info, All right reserved.
@@ -18,7 +19,10 @@ import kotlinx.android.synthetic.main.calendar_rcy_item.view.*
  * Created Time: 2021-11-20
  * Descroption:
  */
-class CalendarRcyAdapter(private val itemList: List<String>) : RecyclerView.Adapter<ViewHolder>() {
+class CalendarRcyAdapter(
+    private val itemList: List<String>,
+    var onItemTouchListener: OnItemClickListener
+) : RecyclerView.Adapter<ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,6 +32,12 @@ class CalendarRcyAdapter(private val itemList: List<String>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener {
+            onItemTouchListener.onItemClick(
+                position,
+                holder.itemView
+            )
+        }
         holder.itemView.iv.setImageResource(R.mipmap.ic_launcher)
         holder.itemView.tv.text = itemList[position]
     }
@@ -39,5 +49,9 @@ class CalendarRcyAdapter(private val itemList: List<String>) : RecyclerView.Adap
     class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.iv)
         val text: TextView = itemView.findViewById(R.id.tv)
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, itemView: View)
     }
 }

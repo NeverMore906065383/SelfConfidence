@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.selfconfidence.GridItemDecoration
 import com.example.selfconfidence.R
 import com.example.selfconfidence.adapter.CalendarRcyAdapter
+import com.example.selfconfidence.adapter.CalendarRcyAdapter.OnItemClickListener
 import com.example.selfconfidence.databinding.FragmentCalendarBinding
+import com.example.selfconfidence.impl.RecyclerViewItemTouchListener
 import com.example.selfconfidence.viewmodel.fragment.FragmentCalendarViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -61,7 +64,33 @@ class CalendarFragment : Fragment() {
     private fun initView(binding: FragmentCalendarBinding) {
         val gridLayoutManager = GridLayoutManager(context, 7)
         binding.recyclerview.layoutManager = gridLayoutManager
-        binding.recyclerview.adapter = CalendarRcyAdapter(listOf("mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen","mon", "thr", "wen"))
+        val listOf = listOf(
+            "mon",
+            "thr",
+            "wen",
+            "mon",
+            "thr",
+            "wen",
+            "mon",
+            "thr",
+            "wen",
+            "mon",
+            "thr",
+            "wen",
+            "mon",
+            "thr",
+            "wen",
+            "mon",
+            "thr",
+            "wen"
+        )
+        binding.recyclerview.adapter = CalendarRcyAdapter(listOf,
+            object : OnItemClickListener {
+                override fun onItemClick(position: Int, itemView: View) {
+                    Toast.makeText(context, "pos:$position", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
         binding.recyclerview.addItemDecoration(GridItemDecoration())
     }
 
