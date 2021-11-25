@@ -1,11 +1,10 @@
 package com.example.selfconfidence.viewmodel.widget
 
-import android.view.View
-import android.widget.Toast
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.selfconfidence.R
+import com.example.selfconfidence.repostitory.activity.DetailCalenderRepository
 import com.example.selfconfidence.viewmodel.BaseViewModel
 
 /**
@@ -16,7 +15,7 @@ import com.example.selfconfidence.viewmodel.BaseViewModel
  * Created Time: 2021-11-20
  * Descroption:
  */
-class CalendarVIewModel : BaseViewModel(), Observable {
+class CalendarViewModel : BaseViewModel<DetailCalenderRepository>(), Observable {
 
     private val _text = MutableLiveData("default")
     private val _image = MutableLiveData(R.mipmap.ic_launcher)

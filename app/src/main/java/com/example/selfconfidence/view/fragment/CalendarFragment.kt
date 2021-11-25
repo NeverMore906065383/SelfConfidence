@@ -1,6 +1,7 @@
 package com.example.selfconfidence.view.fragment
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.util.LayoutDirection
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.example.selfconfidence.adapter.CalendarRcyAdapter
 import com.example.selfconfidence.adapter.CalendarRcyAdapter.OnItemClickListener
 import com.example.selfconfidence.databinding.FragmentCalendarBinding
 import com.example.selfconfidence.impl.RecyclerViewItemTouchListener
+import com.example.selfconfidence.view.activity.DetailCalenderActivity
 import com.example.selfconfidence.viewmodel.fragment.FragmentCalendarViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -88,6 +90,7 @@ class CalendarFragment : Fragment() {
             object : OnItemClickListener {
                 override fun onItemClick(position: Int, itemView: View) {
                     Toast.makeText(context, "pos:$position", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(context,DetailCalenderActivity::class.java))
                 }
             }
         )
