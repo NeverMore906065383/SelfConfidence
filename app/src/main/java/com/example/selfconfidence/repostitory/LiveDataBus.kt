@@ -19,13 +19,11 @@ open  class LiveDataBus private constructor(){
 
     private lateinit var liveDataBus: LiveDataBus;
 
-
-
     private var dataMap: HashMap<String, MutableLiveData<Any>> = HashMap()
 
     fun <T> register(key: String, clazz: Class<T>): MutableLiveData<T> {
         if (!dataMap.containsKey(key)) {
-            dataMap[key] = MutableLiveData(clazz)
+            dataMap[key] = MutableLiveData()
         }
         return dataMap[key] as MutableLiveData<T>
     }

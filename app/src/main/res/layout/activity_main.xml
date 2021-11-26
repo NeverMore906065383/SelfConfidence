@@ -34,28 +34,30 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <Button
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@{viewmodel.itemIcon.get(viewmodel.itemTitle.get(1))}"
-
-                android:text="@{viewmodel.itemTitle.get(0)}" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@{viewmodel.itemIcon.get(viewmodel.itemTitle.get(2))}"
-                android:text="@{viewmodel.itemTitle.get(1)}" />
+                android:gravity="center"
+                android:text="@{viewmodel.itemTitle.get(0)}"
+                app:drawableTopCompat="@mipmap/calendar" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{viewmodel.itemTitle.get(1)}"
+                app:drawableTopCompat="@mipmap/home" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->viewmodel.onClick()}"
                 android:text="@{viewmodel.itemTitle.get(2)}"
-                android:drawableTop="@mipmap/ic_launcher"
-                android:textColor="@color/white" />
+                app:drawableTopCompat="@mipmap/user" />
 
         </LinearLayout>
 

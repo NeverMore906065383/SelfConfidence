@@ -2,8 +2,11 @@ package com.example.selfconfidence.viewmodel.activity
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.selfconfidence.R
+import com.example.selfconfidence.App
+import com.example.selfconfidence.db.CalenderEntity
+import com.example.selfconfidence.utils.LogUtils
 import com.example.selfconfidence.viewmodel.ObservableViewModel
+import kotlin.concurrent.thread
 
 /**
  * Copyright, 2020, WhyHow info, All right reserved.
@@ -14,8 +17,6 @@ import com.example.selfconfidence.viewmodel.ObservableViewModel
  * Descroption:
  */
 class HomeActViewModel : ObservableViewModel() {
-    private val _items = MutableLiveData(3)
-    private val _calendar = MutableLiveData("calendar");
 
     private val _itemsTitle = MutableLiveData(
         mapOf(
@@ -25,20 +26,26 @@ class HomeActViewModel : ObservableViewModel() {
         )
     )
 
-    private val _itemsIcon = MutableLiveData(
-         mapOf(
-            _itemsTitle.value?.get(0) to R.mipmap.ic_launcher,
-            _itemsTitle.value?.get(1) to R.mipmap.ic_launcher,
-            _itemsTitle.value?.get(2) to R.mipmap.ic_launcher
-        )
-    )
 
-    val item: LiveData<Int> = _items
     val itemTitle: LiveData<Map<Int, String>> = _itemsTitle
-    val itemIcon: LiveData<Map<String?, Int>> = _itemsIcon
-    val calendar: LiveData<String> = _calendar;
 
     fun onClick() {
+        thread {
+            val calender = CalenderEntity()
+            calender.calenderModel =
+                listOf(
+                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room1", 0),
+                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room2", 1),
+                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room3", 2),
+                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room4", 3),
+                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room5", 4),
+                )
+            App.calenderDao.insertAll(calender)
+
+            val all = App.calenderDao.getAll()
+            LogUtils.i("calenderDao: "+all.size)
+        }
+
     }
 
 }

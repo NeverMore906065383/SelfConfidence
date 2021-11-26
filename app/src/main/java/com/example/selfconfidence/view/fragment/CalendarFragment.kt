@@ -14,14 +14,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.util.DBUtil
+import com.example.selfconfidence.App
 import com.example.selfconfidence.GridItemDecoration
 import com.example.selfconfidence.R
 import com.example.selfconfidence.adapter.CalendarRcyAdapter
 import com.example.selfconfidence.adapter.CalendarRcyAdapter.OnItemClickListener
 import com.example.selfconfidence.databinding.FragmentCalendarBinding
 import com.example.selfconfidence.impl.RecyclerViewItemTouchListener
+import com.example.selfconfidence.utils.LogUtils
 import com.example.selfconfidence.view.activity.DetailCalenderActivity
 import com.example.selfconfidence.viewmodel.fragment.FragmentCalendarViewModel
+import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,18 +38,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CalendarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +58,12 @@ class CalendarFragment : Fragment() {
     private fun initView(binding: FragmentCalendarBinding) {
         val gridLayoutManager = GridLayoutManager(context, 7)
         binding.recyclerview.layoutManager = gridLayoutManager
+
+        thread {
+            val all = App.calenderDao.getAll()
+            LogUtils.i("calenderDao: " + all?.size)
+        }
+
         val listOf = listOf(
             "mon",
             "thr",
@@ -90,7 +88,7 @@ class CalendarFragment : Fragment() {
             object : OnItemClickListener {
                 override fun onItemClick(position: Int, itemView: View) {
                     Toast.makeText(context, "pos:$position", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(context,DetailCalenderActivity::class.java))
+                    startActivity(Intent(context, DetailCalenderActivity::class.java))
                 }
             }
         )
