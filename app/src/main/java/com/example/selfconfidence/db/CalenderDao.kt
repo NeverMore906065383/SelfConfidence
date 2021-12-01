@@ -1,10 +1,7 @@
 package com.example.selfconfidence.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 /**
  * Copyright, 2020, WhyHow info, All right reserved.
@@ -19,17 +16,20 @@ interface CalenderDao {
     @Query("SELECT * FROM calendar")
     fun getAll(): List<CalenderEntity>
 
-    @Query("SELECT * FROM calendar WHERE id IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): LiveData<List<CalenderEntity>>
+    @Query("SELECT * FROM calendar WHERE date = :date")
+    fun queryByDate(date: String): CalenderEntity?
 
-//    @Query(
-//        "SELECT * FROM calendar WHERE first_name LIKE :first AND " +
-//                "last_name LIKE :last LIMIT 1"
-//    )
-//    fun findByName(first: String, last: String): CalenderEntity
+    @Query("DELETE FROM calendar WHERE date = :date")
+    fun deleteByDate(date: String)
 
     @Insert
     fun insertAll(calender: CalenderEntity)
+
+    @Update(entity = CalenderEntity::class)
+    fun update(calender: CalenderEntity)
+
+    @Query("UPDATE  calendar SET  calenderModel=:model WHERE date = :date")
+    fun updateCalenderModelList(date: String, model: List<CalenderEntity.DetailCalenderModel>)
 
     @Delete
     fun delete(calender: CalenderEntity)

@@ -3,25 +3,17 @@ package com.example.selfconfidence.view.fragment
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.util.LayoutDirection
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
-import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.room.util.DBUtil
 import com.example.selfconfidence.App
 import com.example.selfconfidence.GridItemDecoration
-import com.example.selfconfidence.R
 import com.example.selfconfidence.adapter.CalendarRcyAdapter
-import com.example.selfconfidence.adapter.CalendarRcyAdapter.OnItemClickListener
 import com.example.selfconfidence.databinding.FragmentCalendarBinding
-import com.example.selfconfidence.impl.RecyclerViewItemTouchListener
 import com.example.selfconfidence.utils.LogUtils
 import com.example.selfconfidence.view.activity.DetailCalenderActivity
 import com.example.selfconfidence.viewmodel.fragment.FragmentCalendarViewModel
@@ -84,14 +76,17 @@ class CalendarFragment : Fragment() {
             "thr",
             "wen"
         )
-        binding.recyclerview.adapter = CalendarRcyAdapter(listOf,
-            object : OnItemClickListener {
-                override fun onItemClick(position: Int, itemView: View) {
-                    Toast.makeText(context, "pos:$position", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(context, DetailCalenderActivity::class.java))
-                }
+        val adapter = CalendarRcyAdapter()
+        binding.recyclerview.adapter = adapter
+        adapter.setMoreData(MutableLiveData(listOf))
+        adapter.setItemClickListener(object : CalendarRcyAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int, itemView: View) {
+                val intent = Intent(activity, DetailCalenderActivity::class.java)
+                intent.putExtra("date", listOf[position])
+                startActivity(intent)
             }
-        )
+
+        })
         binding.recyclerview.addItemDecoration(GridItemDecoration())
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.selfconfidence.App
 import com.example.selfconfidence.db.CalenderEntity
+import com.example.selfconfidence.utils.DateUtil
 import com.example.selfconfidence.utils.LogUtils
 import com.example.selfconfidence.viewmodel.ObservableViewModel
 import kotlin.concurrent.thread
@@ -32,18 +33,29 @@ class HomeActViewModel : ObservableViewModel() {
     fun onClick() {
         thread {
             val calender = CalenderEntity()
+            calender.date = DateUtil::NowDate.toString()
+            LogUtils.i("calenderDao date:${calender.date.toString()}")
+            val queryByDate = App.calenderDao.queryByDate(calender.date)
+
             calender.calenderModel =
                 listOf(
-                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room1", 0),
-                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room2", 1),
-                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room3", 2),
-                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room4", 3),
-                    CalenderEntity.DetailCalenderModel(System.currentTimeMillis(), "room5", 4),
+                    CalenderEntity.DetailCalenderModel(DateUtil::NowTime.toString(), "123", 0),
+                    CalenderEntity.DetailCalenderModel(DateUtil::NowTime.toString(), "mmm", 1),
+                    CalenderEntity.DetailCalenderModel(DateUtil::NowTime.toString(), "mmm", 2),
+                    CalenderEntity.DetailCalenderModel(DateUtil::NowTime.toString(), "mmm123", 3),
+                    CalenderEntity.DetailCalenderModel(DateUtil::NowTime.toString(), "123", 4),
                 )
-            App.calenderDao.insertAll(calender)
-
-            val all = App.calenderDao.getAll()
-            LogUtils.i("calenderDao: "+all.size)
+//            App.calenderDao.update( calender.date ,  calender.calenderModel)
+            if (queryByDate == null) {
+                App.calenderDao.insertAll(calender)
+            } else {
+                App.calenderDao.updateCalenderModelList(calender.date, calender.calenderModel)
+            }
+            val all1 = App.calenderDao.getAll()
+            LogUtils.i("calenderDao: " + all1.size)
+//           App.calenderDao.deleteByDate(calender.date)
+//            val all = App.calenderDao.getAll()
+//            LogUtils.i("calenderDao: " + all.size)
         }
 
     }

@@ -8,42 +8,39 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.selfconfidence.adapter.DetailCalendarItemAdapter
 import com.example.selfconfidence.base.BaseActivity
 import com.example.selfconfidence.databinding.ActivityDetailCalenderBinding
-import com.example.selfconfidence.repostitory.activity.DetailCalenderRepository
+import com.example.selfconfidence.db.CalenderEntity
 import com.example.selfconfidence.utils.LogUtils
 import com.example.selfconfidence.viewmodel.activity.DetailCalenderViewModel
 
-class DetailCalenderActivity : BaseActivity<DetailCalenderRepository, DetailCalenderViewModel>() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val detailCalenderViewModel = DetailCalenderViewModel()
+class DetailCalenderActivity : BaseActivity<ActivityDetailCalenderBinding>() {
 
+    override fun onCreated(savedInstanceState: Bundle?) {
+        val detailCalenderViewModel = DetailCalenderViewModel()
         val viewModel = ViewModelProvider.AndroidViewModelFactory(application)
             .create(DetailCalenderViewModel::class.java)
-//        viewModel.query()
-
-
-        val binding = ActivityDetailCalenderBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         binding.data = detailCalenderViewModel
-
         initView(binding, viewModel)
     }
 
-    private fun initView(
-        binding: ActivityDetailCalenderBinding,
-        viewModel: DetailCalenderViewModel
+
+    private fun initView(binding: ActivityDetailCalenderBinding, viewModel: DetailCalenderViewModel
     ) {
         binding.recyclerview.layoutManager = LinearLayoutManager(baseContext)
         viewModel.getAllData().observe(this, Observer { list ->
             list?.let {
-                LogUtils.i("calenderDao 22："+it.size)
-
-                val detailCalendarItemAdapter = DetailCalendarItemAdapter(MutableLiveData(it))
-                detailCalendarItemAdapter.setFooterItemCounts(1)
-                binding.recyclerview.adapter = detailCalendarItemAdapter
+                LogUtils.i("calenderDao 22：" + list.size)
+                val adapter = DetailCalendarItemAdapter()
+                val javaClass = list.javaClass
+                LogUtils.i("calenderDao-------- $javaClass")
+                val newData = MutableLiveData(list)
+                newData.observe(this, Observer {
+                    adapter.notifyDataSetChanged()
+                })
+                adapter.setMoreData(newData)
+                adapter.setFooterItemCounts(1)
+                binding.recyclerview.adapter = adapter
             }
         })
-
-
     }
+
 }

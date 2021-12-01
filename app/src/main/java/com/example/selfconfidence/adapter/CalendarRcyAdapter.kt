@@ -3,11 +3,15 @@ package com.example.selfconfidence.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.selfconfidence.R
+import com.example.selfconfidence.base.BaseRecyclerViewAdapter
+import com.example.selfconfidence.databinding.CalendarRcyItemBinding
+import com.example.selfconfidence.impl.RecyclerViewItemTouchListener
 import kotlinx.android.synthetic.main.calendar_rcy_item.view.*
 import kotlin.coroutines.coroutineContext
 
@@ -19,17 +23,9 @@ import kotlin.coroutines.coroutineContext
  * Created Time: 2021-11-20
  * Descroption:
  */
-class CalendarRcyAdapter(
-    private val itemList: List<String>,
-    var onItemTouchListener: OnItemClickListener
-) : RecyclerView.Adapter<ViewHolder>() {
+class CalendarRcyAdapter : BaseRecyclerViewAdapter<CalendarRcyItemBinding, String>() {
+    private lateinit var onItemTouchListener: OnItemClickListener
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view =
-            LayoutInflater.from(parent.context).inflate(R.layout.calendar_rcy_item, parent, false)
-        return CalendarViewHolder(view)
-    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
@@ -38,20 +34,19 @@ class CalendarRcyAdapter(
                 holder.itemView
             )
         }
-        holder.itemView.iv.setImageResource(R.mipmap.ic_launcher)
-        holder.itemView.tv.text = itemList[position]
-    }
-
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
-
-    class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val image: ImageView = itemView.findViewById(R.id.iv)
-        val text: TextView = itemView.findViewById(R.id.tv)
+        super.onBindViewHolder(holder, position)
     }
 
     interface OnItemClickListener {
         fun onItemClick(position: Int, itemView: View)
+    }
+
+   public fun setItemClickListener(onItemTouchListener: OnItemClickListener) {
+        this.onItemTouchListener = onItemTouchListener
+    }
+
+    override fun bindData(binding: CalendarRcyItemBinding, item: String, position: Int) {
+        binding.iv.setImageResource(R.mipmap.ic_launcher)
+        binding.tv.text = item
     }
 }

@@ -1,7 +1,6 @@
 package com.example.selfconfidence.viewmodel.activity
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.selfconfidence.db.CalenderEntity
 import com.example.selfconfidence.repostitory.activity.DetailCalenderRepository
 import com.example.selfconfidence.viewmodel.BaseViewModel
@@ -24,5 +23,5 @@ class DetailCalenderViewModel : BaseViewModel<DetailCalenderRepository>() {
         DetailCalenderRepository().getDetail()
     }
 
-    fun getAllData():MutableLiveData<List<CalenderEntity.DetailCalenderModel>> =  DetailCalenderRepository().getData()
+    fun getAllData():LiveData<List<CalenderEntity.DetailCalenderModel>> =  DetailCalenderRepository().getData()
 }

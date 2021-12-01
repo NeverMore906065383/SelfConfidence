@@ -15,7 +15,7 @@ import com.example.selfconfidence.db.CalenderDatabase
 class App : Application() {
 
     companion object {
-        lateinit var calenderDao: CalenderDao
+     lateinit var  calenderDao: CalenderDao
     }
 
     override fun onCreate() {

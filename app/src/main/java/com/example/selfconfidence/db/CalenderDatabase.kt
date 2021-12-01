@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.selfconfidence.utils.DiaryEntityConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -17,6 +19,7 @@ import kotlinx.coroutines.launch
  * Descroption:
  */
 @Database(entities = arrayOf(CalenderEntity::class),version = 1,exportSchema = false)
+@TypeConverters(DiaryEntityConverter::class)
 abstract class CalenderDatabase: RoomDatabase() {
 
     abstract fun CalenderDao(): CalenderDao
