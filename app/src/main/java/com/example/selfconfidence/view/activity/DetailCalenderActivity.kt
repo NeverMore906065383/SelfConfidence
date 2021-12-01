@@ -15,10 +15,9 @@ import com.example.selfconfidence.viewmodel.activity.DetailCalenderViewModel
 class DetailCalenderActivity : BaseActivity<ActivityDetailCalenderBinding>() {
 
     override fun onCreated(savedInstanceState: Bundle?) {
-        val detailCalenderViewModel = DetailCalenderViewModel()
         val viewModel = ViewModelProvider.AndroidViewModelFactory(application)
             .create(DetailCalenderViewModel::class.java)
-        binding.data = detailCalenderViewModel
+        binding.data = viewModel
         initView(binding, viewModel)
     }
 
