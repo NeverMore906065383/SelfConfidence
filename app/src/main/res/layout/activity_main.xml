@@ -10,7 +10,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.selfconfidence.viewmodel.activity.HomeActViewModel" />
+            type="com.example.selfconfidence.viewmodel.activity.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

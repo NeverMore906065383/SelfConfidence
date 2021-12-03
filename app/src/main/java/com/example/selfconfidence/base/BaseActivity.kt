@@ -3,7 +3,10 @@ package com.example.selfconfidence.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.example.selfconfidence.viewmodel.activity.MainViewModel
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -14,8 +17,9 @@ import java.lang.reflect.ParameterizedType
  * Created Time: 2021-11-13
  * Descroption:
  */
-abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
+abstract class BaseActivity<VB : ViewBinding > : AppCompatActivity() {
     protected lateinit var binding: VB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val type = javaClass.genericSuperclass

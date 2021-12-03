@@ -15,7 +15,7 @@ import com.example.selfconfidence.viewmodel.BaseViewModel
  * Created Time: 2021-11-20
  * Descroption:
  */
-class CalendarViewModel : BaseViewModel<DetailCalenderRepository>(), Observable {
+class CalendarDetailItemViewModel : BaseViewModel<DetailCalenderRepository>(), Observable {
 
     private val _text = MutableLiveData("default")
     private val _image = MutableLiveData(R.mipmap.ic_launcher)

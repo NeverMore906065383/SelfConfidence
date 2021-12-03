@@ -16,6 +16,13 @@ import com.example.selfconfidence.viewmodel.BaseViewModel
 
 class DetailCalenderViewModel : BaseViewModel<DetailCalenderRepository>() {
 
+    private lateinit var itemData:CalenderEntity.DetailCalenderModel
+    enum class CompleteStatus{
+        GOODJOB,
+        COMPLETED,
+        UNFORTUNATLY,
+        UNCOMPLETED
+    }
 
 
 

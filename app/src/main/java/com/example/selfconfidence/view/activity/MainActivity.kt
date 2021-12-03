@@ -1,22 +1,21 @@
 package com.example.selfconfidence.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.selfconfidence.R
+import com.example.selfconfidence.base.BaseActivity
 import com.example.selfconfidence.databinding.ActivityMainBinding
 import com.example.selfconfidence.view.fragment.CalendarFragment
-import com.example.selfconfidence.viewmodel.activity.HomeActViewModel
+import com.example.selfconfidence.viewmodel.activity.MainViewModel
 
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProvider.AndroidViewModelFactory(application)
-            .create(HomeActViewModel::class.java)
+            .create(MainViewModel::class.java)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -27,6 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        supportFragmentManager.beginTransaction().add(R.id.container,CalendarFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.container, CalendarFragment()).commit()
+    }
+
+    override fun onCreated(savedInstanceState: Bundle?) {
+
     }
 }

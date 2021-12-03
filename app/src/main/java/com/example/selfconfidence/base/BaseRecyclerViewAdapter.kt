@@ -43,8 +43,11 @@ abstract class BaseRecyclerViewAdapter<VB : ViewBinding, M> :
             Boolean::class.java
         )
         binding = method.invoke(null, LayoutInflater.from(parent.context), parent, false) as VB
+        bindingViewModel(binding)
         return ViewHolder(binding.root)
     }
+
+     abstract fun bindingViewModel(binding: VB)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mContentPosition = position - headerCount;

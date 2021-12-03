@@ -17,7 +17,7 @@ import kotlin.concurrent.thread
  * Created Time: 2021-11-20
  * Descroption:
  */
-class HomeActViewModel : ObservableViewModel() {
+class MainViewModel : ObservableViewModel() {
 
     private val _itemsTitle = MutableLiveData(
         mapOf(

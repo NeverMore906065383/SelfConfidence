@@ -1,10 +1,12 @@
 package com.example.selfconfidence.adapter
 
+import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.example.selfconfidence.App
 import com.example.selfconfidence.R
 import com.example.selfconfidence.base.BaseRecyclerViewAdapter
@@ -12,6 +14,8 @@ import com.example.selfconfidence.databinding.ItemCalenderDetailBinding
 import com.example.selfconfidence.db.CalenderEntity
 import com.example.selfconfidence.utils.DateUtil
 import com.example.selfconfidence.utils.LogUtils
+import com.example.selfconfidence.viewmodel.activity.DetailCalenderViewModel
+import com.example.selfconfidence.viewmodel.widget.CalendarDetailItemViewModel
 import kotlin.concurrent.thread
 
 /**
@@ -26,6 +30,7 @@ class DetailCalendarItemAdapter :
     BaseRecyclerViewAdapter<ItemCalenderDetailBinding, CalenderEntity.DetailCalenderModel>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         return when (viewType) {
             itemTypeHeader -> {
                 LogUtils.i("holder type  HeaderViewHolder")
@@ -145,6 +150,11 @@ class DetailCalendarItemAdapter :
         LogUtils.i("bindData:${item.timestamp}")
         binding.tv.setText(item.message)
         binding.ckb.isChecked = item.status != 0
+    }
+
+    override fun bindingViewModel(binding: ItemCalenderDetailBinding) {
+        binding.viewmodel= ViewModelProvider.AndroidViewModelFactory(Application())
+            .create(DetailCalenderViewModel::class.java)
     }
 
 }
