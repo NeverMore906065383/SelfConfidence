@@ -15,7 +15,6 @@ import com.example.selfconfidence.db.CalenderEntity
 import com.example.selfconfidence.utils.DateUtil
 import com.example.selfconfidence.utils.LogUtils
 import com.example.selfconfidence.viewmodel.activity.DetailCalenderViewModel
-import com.example.selfconfidence.viewmodel.widget.CalendarDetailItemViewModel
 import kotlin.concurrent.thread
 
 /**
@@ -111,7 +110,7 @@ class DetailCalendarItemAdapter :
                         val queryByDate = App.calenderDao.queryByDate(DateUtil::NowDate.toString())
                         if (queryByDate != null ) {
                             queryByDate.date = DateUtil::NowDate.toString()
-                            LogUtils.i("calenderDao date:${queryByDate.date.toString()}")
+                            LogUtils.i("calenderDao date:${queryByDate.date}")
                             val toMutableList = queryByDate.calenderModel.toMutableList()
                            if (toMutableList.isNotEmpty()){
                                toMutableList.removeLast()

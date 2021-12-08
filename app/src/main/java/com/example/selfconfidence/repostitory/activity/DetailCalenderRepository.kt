@@ -1,6 +1,5 @@
 package com.example.selfconfidence.repostitory.activity
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.selfconfidence.App
 import com.example.selfconfidence.db.CalenderEntity
@@ -17,36 +16,27 @@ import kotlin.concurrent.thread
  * Descroption:
  */
 class DetailCalenderRepository : BaseRepository() {
-    private lateinit var all: LiveData<List<CalenderEntity.DetailCalenderModel>>
-    private lateinit var data: LiveData<List<CalenderEntity.DetailCalenderModel>>
+    private var detailList: MutableLiveData<List<CalenderEntity.DetailCalenderModel>> =
+        MutableLiveData()
 
-    init {
-
+    fun getData(date: String): MutableLiveData<List<CalenderEntity.DetailCalenderModel>> {
+        queryData(date)
+        return detailList
     }
 
-    fun getData(): MutableLiveData<List<CalenderEntity.DetailCalenderModel>> {
-
-        var liveData: MutableLiveData<List<CalenderEntity.DetailCalenderModel>> = MutableLiveData()
+    private fun queryData(date: String) {
         thread {
-            val all = App.calenderDao.getAll()
-            if (all.isNotEmpty()) {
-                val calenderModel: List<CalenderEntity.DetailCalenderModel> =
-                    all[all.size-1].calenderModel
-                liveData.postValue(calenderModel)
-                LogUtils.i("calenderDao all1:" + all.size)
-            }
-
+            val all = App.calenderDao.queryByDate(date)
+            LogUtils.i("====${all?.calenderModel?.size}")
+            detailList.postValue(all?.calenderModel?.toMutableList())
         }
-        LogUtils.i("calenderDao:" + liveData.value?.size)
-
-        return liveData
     }
 
-    fun getDetail() {
-
-        // TODO: 2021/11/25 room数据库数据获取 或者网络数据查询或者内存缓存等
-
-
+    fun insertData(date: String, item: CalenderEntity.DetailCalenderModel) {
+        thread {
+            detailList.value?.toMutableList()?.add(item)
+            detailList.value?.let { App.calenderDao.updateCalenderModelList(date, it) }
+        }
     }
 
 

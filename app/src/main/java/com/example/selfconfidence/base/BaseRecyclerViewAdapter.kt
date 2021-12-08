@@ -3,11 +3,12 @@ package com.example.selfconfidence.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.example.selfconfidence.db.CalenderEntity
 import com.example.selfconfidence.utils.LogUtils
 import java.lang.reflect.ParameterizedType
 
@@ -21,7 +22,8 @@ import java.lang.reflect.ParameterizedType
  */
 abstract class BaseRecyclerViewAdapter<VB : ViewBinding, M> :
     RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder>() {
-    protected var data: LiveData<List<M>>? = null
+    protected var data: MutableLiveData<List<M>>? = MutableLiveData()
+    protected var freash: MutableLiveData<List<M>>? = null
     protected lateinit var binding: VB
 
     private var mBottomPosition: Int = 0
@@ -47,7 +49,7 @@ abstract class BaseRecyclerViewAdapter<VB : ViewBinding, M> :
         return ViewHolder(binding.root)
     }
 
-     abstract fun bindingViewModel(binding: VB)
+    abstract fun bindingViewModel(binding: VB)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mContentPosition = position - headerCount;
@@ -61,16 +63,23 @@ abstract class BaseRecyclerViewAdapter<VB : ViewBinding, M> :
 
     abstract fun bindData(binding: VB, item: M, position: Int)
 
+    fun setMoreData(owner: LifecycleOwner, newData: LiveData<List<M>>) {
+        data?.value = newData.value
+        LogUtils.i("======data ${data?.value?.size}")
+        data?.observe(owner, Observer { notifyDataSetChanged() })
+    }
+
     fun setMoreData(newData: LiveData<List<M>>) {
-        data = newData
-//        notifyDataSetChanged()
+        data?.value = newData.value
     }
 
 
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun getItemCount(): Int {
-        return (data?.value?.size?.plus(headerCount) ?: 0) + footerCount
+        val i = (data?.value?.size?.plus(headerCount) ?: 0) + footerCount
+        LogUtils.i("====count $i")
+        return i
     }
 
 

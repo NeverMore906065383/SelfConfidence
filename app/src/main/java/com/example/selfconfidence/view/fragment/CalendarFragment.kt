@@ -78,7 +78,7 @@ class CalendarFragment : Fragment() {
         )
         val adapter = CalendarRcyAdapter()
         binding.recyclerview.adapter = adapter
-        adapter.setMoreData(MutableLiveData(listOf))
+        adapter.setMoreData(this, MutableLiveData(listOf))
         adapter.setItemClickListener(object : CalendarRcyAdapter.OnItemClickListener {
             override fun onItemClick(position: Int, itemView: View) {
                 val intent = Intent(activity, DetailCalenderActivity::class.java)

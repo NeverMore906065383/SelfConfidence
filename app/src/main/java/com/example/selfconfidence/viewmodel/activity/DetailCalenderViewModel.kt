@@ -3,6 +3,7 @@ package com.example.selfconfidence.viewmodel.activity
 import androidx.lifecycle.LiveData
 import com.example.selfconfidence.db.CalenderEntity
 import com.example.selfconfidence.repostitory.activity.DetailCalenderRepository
+import com.example.selfconfidence.utils.DateUtil
 import com.example.selfconfidence.viewmodel.BaseViewModel
 
 /**
@@ -15,20 +16,28 @@ import com.example.selfconfidence.viewmodel.BaseViewModel
  */
 
 class DetailCalenderViewModel : BaseViewModel<DetailCalenderRepository>() {
+    private var date: String = DateUtil::NowDate.toString()
 
-    private lateinit var itemData:CalenderEntity.DetailCalenderModel
-    enum class CompleteStatus{
+    enum class CompleteStatus {
         GOODJOB,
         COMPLETED,
         UNFORTUNATLY,
         UNCOMPLETED
     }
 
-
-
-    fun query() {
-        DetailCalenderRepository().getDetail()
+    fun insertData() {
+        DetailCalenderRepository().insertData(
+            DateUtil::NowDate.toString(),
+            CalenderEntity.DetailCalenderModel(DateUtil.NowTime, "", 0)
+        )
     }
 
-    fun getAllData():LiveData<List<CalenderEntity.DetailCalenderModel>> =  DetailCalenderRepository().getData()
+    fun getAllData(): LiveData<List<CalenderEntity.DetailCalenderModel>> =
+        DetailCalenderRepository().getData(date)
+
+    fun setDate(date: String?) {
+        if (date != null) {
+            this.date = date
+        }
+    }
 }

@@ -49,4 +49,7 @@ class CalendarRcyAdapter : BaseRecyclerViewAdapter<CalendarRcyItemBinding, Strin
         binding.iv.setImageResource(R.mipmap.ic_launcher)
         binding.tv.text = item
     }
+
+    override fun bindingViewModel(binding: CalendarRcyItemBinding) {
+    }
 }
