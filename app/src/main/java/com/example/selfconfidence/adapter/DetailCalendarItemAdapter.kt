@@ -69,6 +69,8 @@ class DetailCalendarItemAdapter :
                             calender.date = DateUtil::NowDate.toString()
                             LogUtils.i("calenderDao date:${calender.date.toString()}")
                             val toMutableList = calender.calenderModel.toMutableList()
+                            val toString = DateUtil.NowTime
+                            LogUtils.i("NowTime:$toString")
                             toMutableList.add(
                                 CalenderEntity.DetailCalenderModel(
                                     DateUtil::NowTime.toString(),
@@ -86,6 +88,8 @@ class DetailCalendarItemAdapter :
                             queryByDate.date = DateUtil::NowDate.toString()
                             LogUtils.i("calenderDao date:${queryByDate.date.toString()}")
                             val toMutableList = queryByDate.calenderModel.toMutableList()
+                            val toString = DateUtil::NowDate.toString()
+                            LogUtils.i("NowDate:$toString")
                             toMutableList.add(
                                 CalenderEntity.DetailCalenderModel(
                                     DateUtil::NowTime.toString(),
@@ -98,7 +102,7 @@ class DetailCalendarItemAdapter :
                                 queryByDate.date,
                                 toMutableList
                             )
-                            setMoreData(MutableLiveData(toMutableList))
+//                            setMoreData(MutableLiveData(toMutableList))
                         }
                     }
                 }
@@ -118,7 +122,7 @@ class DetailCalendarItemAdapter :
                                    queryByDate.date,
                                    toMutableList
                                )
-                               setMoreData(MutableLiveData(toMutableList))
+//                               setMoreData(MutableLiveData(toMutableList))
                             }
                         }
                     }
@@ -152,7 +156,7 @@ class DetailCalendarItemAdapter :
     }
 
     override fun bindingViewModel(binding: ItemCalenderDetailBinding) {
-        binding.viewmodel= ViewModelProvider.AndroidViewModelFactory(Application())
+        binding.viewmodel = ViewModelProvider.AndroidViewModelFactory(Application())
             .create(DetailCalenderViewModel::class.java)
     }
 
